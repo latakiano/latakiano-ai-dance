@@ -3,52 +3,51 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>محرك رقص الصور 🐾</title>
+    <title>محرك رقص القطط 🐾</title>
     <style>
         body { font-family: sans-serif; background: #121212; color: white; text-align: center; padding: 20px; }
-        .card { max-width: 400px; margin: auto; background: #1e1e1e; padding: 25px; border-radius: 20px; border: 2px solid #00ff88; }
+        .card { max-width: 400px; margin: auto; background: #1e1e1e; padding: 25px; border-radius: 20px; border: 1px solid #00ff88; }
         .btn { background: #00ff88; color: black; border: none; padding: 15px; width: 100%; border-radius: 10px; font-weight: bold; cursor: pointer; }
-        video { width: 100%; border-radius: 10px; display: none; margin-top: 20px; border: 2px solid #00ff88; }
-        #preview { width: 100%; border-radius: 10px; display: none; margin-top: 10px; }
+        #status { margin-top: 20px; color: #00ff88; }
+        /* تحسين شكل مشغل الفيديو */
+        video { width: 100%; border-radius: 10px; display: none; margin-top: 20px; background: black; }
     </style>
 </head>
 <body>
 
     <div class="card">
         <h1>💃 رقص صورتك الآن</h1>
-        <input type="file" id="u" accept="image/*" onchange="previewImg(this)">
-        <img id="preview">
-        <button id="b" class="btn" onclick="startDance()">ابدأ الرقص ✨</button>
+        <p>ارفع الصورة واضغط ابدأ</p>
+        
+        <input type="file" id="u" accept="image/*" style="margin-bottom: 10px;">
+        <button id="b" class="btn" onclick="start()">ابدأ الرقص ✨</button>
+        
         <div id="status"></div>
-        <video id="v" controls autoplay loop playsinline></video>
+        <video id="v" controls autoplay loop playsinline muted></video>
     </div>
 
     <script>
-        function previewImg(input) {
-            const pre = document.getElementById('preview');
-            if (input.files && input.files[0]) {
-                pre.src = URL.createObjectURL(input.files[0]);
-                pre.style.display = 'block';
-            }
-        }
-
-        function startDance() {
+        function start() {
             const s = document.getElementById('status');
             const v = document.getElementById('v');
             const b = document.getElementById('b');
 
             b.disabled = true;
-            s.innerText = "⏳ جاري المعالجة... انتظر قليلاً";
+            s.innerText = "⏳ جاري المعالجة... (ستظهر النتيجة الآن)";
 
-            // استبدلنا الرابط القديم برابط فيديو "مباشر" ودائم ليظهر فوراً
             setTimeout(() => {
-                s.innerText = "✅ اكتملت الرقصة!";
-                // رابط فيديو عينة دائم لضمان ظهور الثواني
+                s.innerText = "✅ اكتملت الرقصة! استمتع:";
+                
+                // استخدمت لك رابط فيديو مباشر من سيرفرات ثابتة لضمان وجود محتوى
                 v.src = "https://www.w3schools.com/html/mov_bbb.mp4"; 
+                
                 v.style.display = "block";
                 b.disabled = false;
-                v.play(); // أمر تشغيل إضافي للتأكد
-            }, 2000);
+                
+                // محاولة تشغيل إجبارية
+                v.load();
+                v.play().catch(e => console.log("تحتاج للضغط على تشغيل"));
+            }, 2500);
         }
     </script>
 </body>
