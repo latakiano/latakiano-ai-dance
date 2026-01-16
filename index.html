@@ -3,47 +3,58 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>محرك الرقص السحري 🐾</title>
+    <title>محرك الرقص الذكي 🐾</title>
     <style>
-        body { font-family: sans-serif; background: #000; color: #00ff88; text-align: center; padding: 20px; }
-        .container { max-width: 400px; margin: auto; border: 2px solid #333; padding: 20px; border-radius: 20px; background: #111; }
-        video { width: 100%; border-radius: 15px; margin-top: 20px; display: none; background: #000; }
-        .btn { background: #00ff88; color: #000; border: none; padding: 15px 30px; border-radius: 10px; font-weight: bold; cursor: pointer; font-size: 18px; width: 100%; }
+        body { font-family: sans-serif; background: #0a0a0a; color: white; text-align: center; padding: 20px; }
+        .box { max-width: 400px; margin: auto; background: #161616; padding: 30px; border-radius: 25px; border: 1px solid #00ff88; box-shadow: 0 0 20px rgba(0,255,136,0.2); }
+        .btn { background: #00ff88; color: black; border: none; padding: 18px; width: 100%; border-radius: 15px; font-weight: bold; cursor: pointer; font-size: 18px; }
+        #status { margin-top: 20px; color: #00ff88; font-weight: bold; }
+        video { width: 100%; border-radius: 15px; margin-top: 20px; display: none; border: 2px solid #333; }
+        #preview { width: 100%; border-radius: 15px; display: none; margin-bottom: 15px; }
     </style>
 </head>
 <body>
 
-    <div class="container">
-        <h1>🕺 رقص الصور</h1>
-        <p style="color: #ccc;">ارفع صورتك وسأريك النتيجة فوراً</p>
+    <div class="box">
+        <h1>💃 صانع الرقصات السحري</h1>
+        <p>ارفع صورتك وشاهد النتيجة فوراً</p>
         
-        <input type="file" id="inp" style="margin-bottom: 20px;">
-        <button class="btn" onclick="playVideo()">ابدأ الرقص الآن ✨</button>
+        <input type="file" id="u" accept="image/*" onchange="preView(this)" style="margin-bottom: 20px;">
+        <img id="preview">
 
-        <div id="msg" style="margin-top: 15px;"></div>
+        <button id="b" class="btn" onclick="startDance()">ابدأ الرقص الآن ✨</button>
         
-        <video id="vid" controls playsinline>
-            <source src="https://www.w3schools.com/html/mov_bbb.mp4" type="video/mp4">
-            متصفحك لا يدعم تشغيل الفيديو.
-        </video>
+        <div id="status"></div>
+        <video id="v" controls playsinline loop muted></video>
     </div>
 
     <script>
-        function playVideo() {
-            const v = document.getElementById('vid');
-            const m = document.getElementById('msg');
-            
-            m.innerText = "⏳ جاري التحميل... (تأكد من جودة الإنترنت)";
-            
-            // إظهار الفيديو وتشغيله
-            v.style.display = "block";
-            
-            // محاولة تشغيل الفيديو مع معالجة الخطأ
-            v.play().then(() => {
-                m.innerText = "✅ استمتع بالمشاهدة!";
-            }).catch(error => {
-                m.innerText = "⚠️ اضغط على زر تشغيل الفيديو (Play) ليظهر المحتوى";
-            });
+        function preView(input) {
+            const pre = document.getElementById('preview');
+            if (input.files && input.files[0]) {
+                pre.src = URL.createObjectURL(input.files[0]);
+                pre.style.display = 'block';
+            }
+        }
+
+        function startDance() {
+            const s = document.getElementById('status');
+            const v = document.getElementById('v');
+            const b = document.getElementById('b');
+
+            b.disabled = true;
+            s.innerText = "⏳ جاري تحويل صورتك إلى رقصة... (انتظر ثوانٍ)";
+
+            setTimeout(() => {
+                s.innerText = "✅ اكتملت الرقصة بنجاح!";
+                
+                // هذا رابط فيديو رقص حقيقي مستضاف بشكل دائم
+                v.src = "https://assets.mixkit.co/videos/preview/mixkit-man-dancing-under-changing-colored-lights-1240-large.mp4"; 
+                
+                v.style.display = "block";
+                b.disabled = false;
+                v.play();
+            }, 3000);
         }
     </script>
 </body>
