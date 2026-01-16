@@ -2,64 +2,34 @@
 <html lang="ar" dir="rtl">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>AI Dance Mobile</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>المحاولة الناجحة بإذن الله</title>
     <style>
-        body { font-family: sans-serif; background: #000; color: #fff; text-align: center; padding: 15px; margin: 0; }
-        .card { background: #111; padding: 20px; border-radius: 25px; border: 1px solid #00ff88; margin-top: 10px; }
-        .btn { background: #00ff88; color: #000; border: none; padding: 20px; width: 100%; border-radius: 15px; font-weight: bold; font-size: 18px; -webkit-appearance: none; }
-        #status { margin-top: 15px; color: #00ff88; font-weight: bold; font-size: 14px; }
-        /* تصميم مشغل الفيديو للجوال */
-        .video-wrapper { width: 100%; border-radius: 15px; overflow: hidden; display: none; margin-top: 20px; background: #000; line-height: 0; }
-        video { width: 100%; height: auto; border-radius: 15px; }
+        body { font-family: sans-serif; background: #000; color: #00ff88; text-align: center; padding: 20px; }
+        .box { border: 2px solid #00ff88; padding: 20px; border-radius: 15px; background: #111; }
+        video { width: 100%; border-radius: 10px; margin-top: 20px; display: none; }
+        .btn { background: #00ff88; color: #000; padding: 15px; border-radius: 10px; width: 100%; font-weight: bold; border: none; margin-top: 10px; }
     </style>
 </head>
 <body>
-
-    <div class="card">
-        <h2 style="margin-top:0">🕺 رقصة الذكاء الاصطناعي</h2>
-        <p style="color: #888; font-size: 14px;">ارفع صورتك واضغط الزر (يعمل على الجوال)</p>
-        
-        <input type="file" id="u" accept="image/*" style="margin-bottom: 20px; width: 100%;">
-        
-        <button id="b" class="btn" onclick="mobileMagic()">اضغط هنا لبدء السحر ✨</button>
-        
-        <div id="status"></div>
-        
-        <div id="v-box" class="video-wrapper">
-            <video id="v" muted playsinline loop controls preload="auto">
-                <source src="https://www.w3schools.com/html/mov_bbb.mp4" type="video/mp4">
-            </video>
-        </div>
+    <div class="box">
+        <h3>جرب رفع أي فيديو قصير من جوالك</h3>
+        <input type="file" id="fileInp" accept="video/*,image/*" onchange="loadMedia(this)">
+        <div id="msg"></div>
+        <video id="vid" controls playsinline muted autoplay></video>
     </div>
 
     <script>
-        function mobileMagic() {
-            const v = document.getElementById('v');
-            const box = document.getElementById('v-box');
-            const s = document.getElementById('status');
-            const b = document.getElementById('b');
-
-            // طلب الإذن من المتصفح (ضروري للجوال)
-            s.innerText = "⏳ جاري تحضير الفيديو...";
-            
-            setTimeout(() => {
-                s.innerText = "✅ اكتملت الرقصة! شاهد الآن:";
-                box.style.display = "block";
-                
-                // إجبار الجوال على تحميل الفيديو
-                v.load(); 
-                
-                // محاولة تشغيل صامتة (مضمونة في الجوال)
-                let promise = v.play();
-                
-                if (promise !== undefined) {
-                    promise.catch(error => {
-                        // إذا فشل التشغيل التلقائي، نطلب لمسة من المستخدم
-                        s.innerText = "⚠️ اضغط على علامة التشغيل وسط الفيديو";
-                    });
-                }
-            }, 2000);
+        function loadMedia(input) {
+            const v = document.getElementById('vid');
+            const msg = document.getElementById('msg');
+            if (input.files && input.files[0]) {
+                const url = URL.createObjectURL(input.files[0]);
+                v.src = url;
+                v.style.display = "block";
+                msg.innerText = "جاري التشغيل من ذاكرة الجوال...";
+                v.play();
+            }
         }
     </script>
 </body>
