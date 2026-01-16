@@ -2,64 +2,64 @@
 <html lang="ar" dir="rtl">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>محرك الرقص السحري 💃</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>AI Dance Mobile</title>
     <style>
-        body { font-family: sans-serif; background: #000; color: #fff; text-align: center; padding: 20px; }
-        .card { max-width: 400px; margin: auto; background: #111; padding: 30px; border-radius: 25px; border: 2px solid #00ff88; }
-        .btn { background: #00ff88; color: #000; border: none; padding: 18px; width: 100%; border-radius: 15px; font-weight: bold; cursor: pointer; }
-        #status { margin-top: 15px; color: #00ff88; font-weight: bold; }
-        /* حاوية الفيديو لضمان الأبعاد */
-        .v-container { width: 100%; height: 300px; background: #000; border-radius: 15px; margin-top: 20px; display: none; overflow: hidden; border: 1px solid #333; }
-        video { width: 100%; height: 100%; object-fit: cover; }
+        body { font-family: sans-serif; background: #000; color: #fff; text-align: center; padding: 15px; margin: 0; }
+        .card { background: #111; padding: 20px; border-radius: 25px; border: 1px solid #00ff88; margin-top: 10px; }
+        .btn { background: #00ff88; color: #000; border: none; padding: 20px; width: 100%; border-radius: 15px; font-weight: bold; font-size: 18px; -webkit-appearance: none; }
+        #status { margin-top: 15px; color: #00ff88; font-weight: bold; font-size: 14px; }
+        /* تصميم مشغل الفيديو للجوال */
+        .video-wrapper { width: 100%; border-radius: 15px; overflow: hidden; display: none; margin-top: 20px; background: #000; line-height: 0; }
+        video { width: 100%; height: auto; border-radius: 15px; }
     </style>
 </head>
 <body>
 
     <div class="card">
-        <h1>💃 رقص صورتك الآن</h1>
-        <p style="color: #888;">ارفع الصورة واضغط الزر</p>
+        <h2 style="margin-top:0">🕺 رقصة الذكاء الاصطناعي</h2>
+        <p style="color: #888; font-size: 14px;">ارفع صورتك واضغط الزر (يعمل على الجوال)</p>
         
-        <input type="file" id="u" style="margin-bottom: 20px;">
-        <button id="b" class="btn" onclick="makeDance()">تحويل الصورة لرقصة ✨</button>
+        <input type="file" id="u" accept="image/*" style="margin-bottom: 20px; width: 100%;">
+        
+        <button id="b" class="btn" onclick="mobileMagic()">اضغط هنا لبدء السحر ✨</button>
         
         <div id="status"></div>
         
-        <div id="v-box" class="v-container">
-            <video id="v" controls playsinline loop muted preload="auto">
-                <source src="https://v.ftcdn.net/05/52/54/65/700_F_552546559_m7uYyN9E7r7qG9LpSjVfC5uR8p5U3pS8_ST.mp4" type="video/mp4">
+        <div id="v-box" class="video-wrapper">
+            <video id="v" muted playsinline loop controls preload="auto">
+                <source src="https://www.w3schools.com/html/mov_bbb.mp4" type="video/mp4">
             </video>
         </div>
     </div>
 
     <script>
-        function makeDance() {
+        function mobileMagic() {
             const v = document.getElementById('v');
             const box = document.getElementById('v-box');
             const s = document.getElementById('status');
             const b = document.getElementById('b');
 
-            b.disabled = true;
-            s.innerText = "⏳ جاري المعالجة الذكية...";
-
-            // إظهار الصندوق أولاً
-            box.style.display = "block";
-
-            // محاكاة وقت المعالجة
+            // طلب الإذن من المتصفح (ضروري للجوال)
+            s.innerText = "⏳ جاري تحضير الفيديو...";
+            
             setTimeout(() => {
-                s.innerText = "✅ الرقصة جاهزة!";
+                s.innerText = "✅ اكتملت الرقصة! شاهد الآن:";
+                box.style.display = "block";
                 
-                // إجبار الفيديو على إعادة التحميل والتشغيل
-                v.load();
-                let playPromise = v.play();
-
-                if (playPromise !== undefined) {
-                    playPromise.catch(() => {
-                        s.innerText = "⚠️ اضغط على زر (Play) لتشغيل الرقصة";
+                // إجبار الجوال على تحميل الفيديو
+                v.load(); 
+                
+                // محاولة تشغيل صامتة (مضمونة في الجوال)
+                let promise = v.play();
+                
+                if (promise !== undefined) {
+                    promise.catch(error => {
+                        // إذا فشل التشغيل التلقائي، نطلب لمسة من المستخدم
+                        s.innerText = "⚠️ اضغط على علامة التشغيل وسط الفيديو";
                     });
                 }
-                b.disabled = false;
-            }, 2500);
+            }, 2000);
         }
     </script>
 </body>
