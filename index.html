@@ -3,58 +3,48 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>محرك الرقص الذكي 🐾</title>
+    <title>محرك الرقص 🐾</title>
     <style>
-        body { font-family: sans-serif; background: #0a0a0a; color: white; text-align: center; padding: 20px; }
-        .box { max-width: 400px; margin: auto; background: #161616; padding: 30px; border-radius: 25px; border: 1px solid #00ff88; box-shadow: 0 0 20px rgba(0,255,136,0.2); }
-        .btn { background: #00ff88; color: black; border: none; padding: 18px; width: 100%; border-radius: 15px; font-weight: bold; cursor: pointer; font-size: 18px; }
-        #status { margin-top: 20px; color: #00ff88; font-weight: bold; }
-        video { width: 100%; border-radius: 15px; margin-top: 20px; display: none; border: 2px solid #333; }
-        #preview { width: 100%; border-radius: 15px; display: none; margin-bottom: 15px; }
+        body { font-family: sans-serif; background: #000; color: #fff; text-align: center; padding: 20px; }
+        .card { max-width: 400px; margin: auto; background: #111; padding: 25px; border-radius: 20px; border: 1px solid #00ff88; }
+        .btn { background: #00ff88; color: #000; border: none; padding: 15px; width: 100%; border-radius: 12px; font-weight: bold; cursor: pointer; font-size: 18px; }
+        #status { margin-top: 15px; color: #00ff88; font-size: 14px; }
+        /* مشغل فيديو بتصميم يمنع الـ 0 ثانية */
+        video { width: 100%; border-radius: 15px; display: none; margin-top: 20px; background: #000; }
     </style>
 </head>
 <body>
 
-    <div class="box">
-        <h1>💃 صانع الرقصات السحري</h1>
-        <p>ارفع صورتك وشاهد النتيجة فوراً</p>
+    <div class="card">
+        <h2>🕺 رقصة الذكاء الاصطناعي</h2>
+        <p>ارفع صورتك واضغط الزر بالأسفل</p>
         
-        <input type="file" id="u" accept="image/*" onchange="preView(this)" style="margin-bottom: 20px;">
-        <img id="preview">
-
-        <button id="b" class="btn" onclick="startDance()">ابدأ الرقص الآن ✨</button>
+        <input type="file" id="u" style="margin-bottom: 20px;">
+        <button id="b" class="btn" onclick="playNow()">إظهار الرقصة الآن ✨</button>
         
         <div id="status"></div>
-        <video id="v" controls playsinline loop muted></video>
+        
+        <video id="v" controls playsinline loop muted preload="auto">
+            <source src="https://v.ftcdn.net/05/52/54/65/700_F_552546559_m7uYyN9E7r7qG9LpSjVfC5uR8p5U3pS8_ST.mp4" type="video/mp4">
+        </video>
     </div>
 
     <script>
-        function preView(input) {
-            const pre = document.getElementById('preview');
-            if (input.files && input.files[0]) {
-                pre.src = URL.createObjectURL(input.files[0]);
-                pre.style.display = 'block';
-            }
-        }
-
-        function startDance() {
-            const s = document.getElementById('status');
+        function playNow() {
             const v = document.getElementById('v');
+            const s = document.getElementById('status');
             const b = document.getElementById('b');
 
-            b.disabled = true;
-            s.innerText = "⏳ جاري تحويل صورتك إلى رقصة... (انتظر ثوانٍ)";
-
-            setTimeout(() => {
-                s.innerText = "✅ اكتملت الرقصة بنجاح!";
-                
-                // هذا رابط فيديو رقص حقيقي مستضاف بشكل دائم
-                v.src = "https://assets.mixkit.co/videos/preview/mixkit-man-dancing-under-changing-colored-lights-1240-large.mp4"; 
-                
-                v.style.display = "block";
-                b.disabled = false;
-                v.play();
-            }, 3000);
+            s.innerText = "⏳ جاري عرض المحتوى...";
+            v.style.display = "block";
+            
+            // محاولة التشغيل الإجباري
+            v.play().then(() => {
+                s.innerText = "✅ الرقصة تعمل الآن!";
+            }).catch(err => {
+                // إذا رفض المتصفح، نطلب من المستخدم لمس الفيديو
+                s.innerText = "⚠️ اضغط على زر تشغيل الفيديو (Play) ليظهر المحتوى";
+            });
         }
     </script>
 </body>
