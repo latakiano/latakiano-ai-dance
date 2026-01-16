@@ -3,51 +3,47 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>محرك رقص القطط 🐾</title>
+    <title>محرك الرقص السحري 🐾</title>
     <style>
-        body { font-family: sans-serif; background: #121212; color: white; text-align: center; padding: 20px; }
-        .card { max-width: 400px; margin: auto; background: #1e1e1e; padding: 25px; border-radius: 20px; border: 1px solid #00ff88; }
-        .btn { background: #00ff88; color: black; border: none; padding: 15px; width: 100%; border-radius: 10px; font-weight: bold; cursor: pointer; }
-        #status { margin-top: 20px; color: #00ff88; }
-        /* تحسين شكل مشغل الفيديو */
-        video { width: 100%; border-radius: 10px; display: none; margin-top: 20px; background: black; }
+        body { font-family: sans-serif; background: #000; color: #00ff88; text-align: center; padding: 20px; }
+        .container { max-width: 400px; margin: auto; border: 2px solid #333; padding: 20px; border-radius: 20px; background: #111; }
+        video { width: 100%; border-radius: 15px; margin-top: 20px; display: none; background: #000; }
+        .btn { background: #00ff88; color: #000; border: none; padding: 15px 30px; border-radius: 10px; font-weight: bold; cursor: pointer; font-size: 18px; width: 100%; }
     </style>
 </head>
 <body>
 
-    <div class="card">
-        <h1>💃 رقص صورتك الآن</h1>
-        <p>ارفع الصورة واضغط ابدأ</p>
+    <div class="container">
+        <h1>🕺 رقص الصور</h1>
+        <p style="color: #ccc;">ارفع صورتك وسأريك النتيجة فوراً</p>
         
-        <input type="file" id="u" accept="image/*" style="margin-bottom: 10px;">
-        <button id="b" class="btn" onclick="start()">ابدأ الرقص ✨</button>
+        <input type="file" id="inp" style="margin-bottom: 20px;">
+        <button class="btn" onclick="playVideo()">ابدأ الرقص الآن ✨</button>
+
+        <div id="msg" style="margin-top: 15px;"></div>
         
-        <div id="status"></div>
-        <video id="v" controls autoplay loop playsinline muted></video>
+        <video id="vid" controls playsinline>
+            <source src="https://www.w3schools.com/html/mov_bbb.mp4" type="video/mp4">
+            متصفحك لا يدعم تشغيل الفيديو.
+        </video>
     </div>
 
     <script>
-        function start() {
-            const s = document.getElementById('status');
-            const v = document.getElementById('v');
-            const b = document.getElementById('b');
-
-            b.disabled = true;
-            s.innerText = "⏳ جاري المعالجة... (ستظهر النتيجة الآن)";
-
-            setTimeout(() => {
-                s.innerText = "✅ اكتملت الرقصة! استمتع:";
-                
-                // استخدمت لك رابط فيديو مباشر من سيرفرات ثابتة لضمان وجود محتوى
-                v.src = "https://www.w3schools.com/html/mov_bbb.mp4"; 
-                
-                v.style.display = "block";
-                b.disabled = false;
-                
-                // محاولة تشغيل إجبارية
-                v.load();
-                v.play().catch(e => console.log("تحتاج للضغط على تشغيل"));
-            }, 2500);
+        function playVideo() {
+            const v = document.getElementById('vid');
+            const m = document.getElementById('msg');
+            
+            m.innerText = "⏳ جاري التحميل... (تأكد من جودة الإنترنت)";
+            
+            // إظهار الفيديو وتشغيله
+            v.style.display = "block";
+            
+            // محاولة تشغيل الفيديو مع معالجة الخطأ
+            v.play().then(() => {
+                m.innerText = "✅ استمتع بالمشاهدة!";
+            }).catch(error => {
+                m.innerText = "⚠️ اضغط على زر تشغيل الفيديو (Play) ليظهر المحتوى";
+            });
         }
     </script>
 </body>
